@@ -6,9 +6,14 @@ const MyImage = () => {
   const [showModal, setShowModal] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [showImage, setShowImage] = useState(false);
+  const [message, setMessage] = useState("");
 
   const handleImageLoad = () => {
-    setIsLoaded(true);
+    setUploading(false); // Stop loading animation
+    setTimeout(() => {
+      setIsLoaded(true); // Mark the image as loaded after a slight delay
+      setMessage("Loading Complete!");
+    }, 1000); // Add slight delay for opacity transition visibility
   };
 
   const handleUpload = (event) => {
@@ -16,12 +21,7 @@ const MyImage = () => {
       setShowModal(false); // Close the modal
       setUploading(true); // Start loading animation
       setShowImage(true); // Show the Mona Lisa image
-      
-      // Simulate file upload process
-      setTimeout(() => {
-        setUploading(false); // Stop loading animation
-        setIsLoaded(true); // Mark the image as loaded
-      }, 6000); // Adjust duration as needed
+      setMessage("Loading..."); // Show loading message
     }
   };
 
@@ -46,6 +46,9 @@ const MyImage = () => {
           </div>
         </div>
       )}
+
+      {/* Loading Message */}
+      {showImage && <p className="loading-message">{message}</p>}
 
       {/* Mona Lisa Image */}
       {showImage && (
